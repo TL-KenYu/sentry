@@ -236,7 +236,7 @@ const TEMPLATE_TABLE_COLUMN: TableColumn<React.ReactText> = {
   name: '',
   aggregation: '',
   field: '',
-  eventViewField: Object.freeze({field: '', title: ''}),
+  eventViewField: Object.freeze({field: '', title: '', width: ''}),
   isDragging: false,
 
   type: 'never',
@@ -272,6 +272,7 @@ export function decodeColumnOrder(props: {
     column.key = col.aggregationField;
     column.name = col.name;
     column.type = (FIELDS[column.field] || 'never') as ColumnValueType;
+    // column.width =
 
     column.isSortable = AGGREGATIONS[column.aggregation]
       ? AGGREGATIONS[column.aggregation].isSortable
@@ -281,6 +282,7 @@ export function decodeColumnOrder(props: {
     column.eventViewField = {
       title: fields[index].title,
       field: fields[index].field,
+      width: '1fr',
     };
 
     return column;

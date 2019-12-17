@@ -9,6 +9,7 @@ export type ObjectKey = React.ReactText;
 
 export type GridColumn<K = ObjectKey> = {
   key: K;
+  width?: number | string;
 };
 
 export type GridColumnHeader<K = ObjectKey> = GridColumn<K> & {

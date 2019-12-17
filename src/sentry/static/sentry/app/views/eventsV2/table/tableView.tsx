@@ -3,7 +3,7 @@ import {Location} from 'history';
 
 import {Organization} from 'app/types';
 import {trackAnalyticsEvent} from 'app/utils/analytics';
-import GridEditable from 'app/components/gridEditable';
+import GridEditable, {COL_WIDTH_DEFAULT} from 'app/components/gridEditable';
 import {
   tokenizeSearch,
   stringifyQueryObject,
@@ -42,7 +42,6 @@ export type TableViewProps = {
 };
 
 /**
- *
  * The `TableView` is marked with leading _ in its method names. It consumes
  * the EventView object given in its props to generate new EventView objects
  * for actions such as creating new columns, updating columns, sorting columns,
@@ -72,6 +71,7 @@ class TableView extends React.Component<TableViewProps> {
         aggregation: String(nextColumn.aggregation),
         field: String(nextColumn.field),
         fieldname: nextColumn.name,
+        width: COL_WIDTH_DEFAULT,
       };
 
       // create and insert a column at a specific index
@@ -120,7 +120,8 @@ class TableView extends React.Component<TableViewProps> {
     const payload = {
       aggregation: String(nextColumn.aggregation),
       field: String(nextColumn.field),
-      fieldname: nextColumn.name,
+      fieldname: String(nextColumn.name),
+      width: String(nextColumn.width),
     };
 
     const tableMeta = (tableData && tableData.meta) || undefined;
@@ -367,6 +368,11 @@ class TableView extends React.Component<TableViewProps> {
         organization_id: organization.id,
       });
     }
+  };
+
+  onResizeColumn = (columnIndex: number, nextColumn: TableColumn<keyof TableDataRow>) => {
+    console.warn('onResizeColumn', columnIndex, nextColumn);
+    this._updateColumn(columnIndex, nextColumn);
   };
 
   render() {
