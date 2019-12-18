@@ -1,0 +1,19 @@
+name: CI Build
+# This workflow is triggered on pushes to the repository.
+on: [push]
+
+jobs:
+  build:
+    # Job name is Greeting
+    name: CI Build and Pusb
+    # This job runs on Linux
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish Docker
+        uses: elgohr/Publish-Docker-Github-Action@2.10
+        with:
+          # The name of the image you would like to push
+          name: kenyu/sentry
+          username: {{ secrets.DOCKERHUB_USERNAME }}
+          password: {{ secrets.DOCKERHUB_PASSWORD }}
+          registry: hub.docker.com
